@@ -32,8 +32,24 @@ Componentes utilizados do material Design :
 ## Passos para começar
 
 - Pré-requisitos:
+
   - O nível mínimo de API com suporte é 21.
   - Android Studio 3.6 ou superior.
+
+- Configuração do projeto
+
+  - Depêndencias:(Build.gradle - Module: app)
+    apply plugin: 'kotlin-android-extensions'
+
+    def camerax_version = "1.0.0-beta07"
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    implementation "androidx.camera:camera-view:1.0.0-alpha14"
+
+    compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 ## Funções
 
