@@ -38,7 +38,7 @@ Componentes utilizados do material Design :
 
 ## Configuração do projeto
 
-Adicionar depêndencias no arquivo - Build.gradle (Module: app)
+Adicionar depêndencias no arquivo - build.gradle (Module: app)
 
 ```gradle
   apply plugin: 'kotlin-android-extensions'
@@ -58,9 +58,29 @@ Adicionar depêndencias no arquivo - Build.gradle (Module: app)
   }
 ```
 
+Criar o layout para exibição da camera.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   tools:context=".MainActivity">
+
+   <androidx.camera.view.PreviewView
+    android:id="@+id/cameraPreview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
 ## Funções
 
-Funções realizadas pra baixar e salvar as imagens:
+Funções realizadas pra tirar foto, salvar no dispositivo e compratilhar imagem:
 
 ### Start Camera
 
@@ -168,4 +188,40 @@ fun getImage(): ArrayList<Bitmap>? {
 private val getPath = context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
 
 
+```
+
+### Compratilhar Imagem
+
+```kotlin
+fun shared(){
+  try {
+    val uri: Uri? = getUri()
+    if (uri != null) {
+      val intent = Intent(Intent.ACTION_SEND).apply {
+          type = "*/*"
+          putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file))
+      }
+      try {
+          context.startActivity(Intent.createChooser(intent, "Shared"))
+      } catch (e: Exception) {
+          e.printStackTrace()
+      }
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+private fun getUri(): Uri? {
+  return try {
+    FileProvider.getUriForFile(
+      context,
+      BuildConfig.APPLICATION_ID + ".provider",
+      file
+    )
+  } catch (e: IllegalArgumentException) {
+    Log.e("File Selector", "The selected file can't be shared: $file")
+    null
+  }
+}
 ```
