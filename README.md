@@ -9,7 +9,7 @@ As imagens retiradas da camera são salvas dentro da pasta com o nome do aplicat
 
 ## Screenshots
 
-![image1](screenshots/image_animada.gif "Gif animado")
+![image1](screenshots/share-image.gif "Gif animado")
 
 ## Material Design
 
@@ -118,7 +118,7 @@ private fun startCamera() {
 
 ```
 
-### take Photo
+### Take Photo
 
 ```kotlin
 private fun takePhoto() {
